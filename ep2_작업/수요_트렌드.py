@@ -15,3 +15,8 @@ for gp in ["","youtube"]:
                 break
             except Exception as e: print("ERR",g,gp,e,flush=True); time.sleep(20)
         time.sleep(8)
+
+# 연관 검색어: 기준 검색어와 함께 많이 찾은 검색어(인기)와 빠르게 늘어난 검색어(급상승)
+def related(kw,gp=""):
+    p.build_payload([kw],geo='KR',timeframe='today 12-m',gprop=gp)
+    return p.related_queries()[kw]
