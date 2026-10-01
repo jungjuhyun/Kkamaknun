@@ -1,13 +1,14 @@
-# 안원잘부 영상 자막(한국어 자동 자막 포함)을 받아 영상마다 txt로 저장한다.
+# 목록 파일에 적힌 영상 자막(한국어 자동 자막 포함)을 받아 영상마다 txt로 저장한다.
 # 클라우드 서버에서는 YouTube가 막으므로, 사용자 컴퓨터에서 실행한다.
 # 준비: pip install youtube-transcript-api
-# 실행: 이 폴더에서  python 자막받기.py
-import json, os, time
+# 실행: 이 폴더에서  python 자막받기.py 목록파일.json   (목록파일을 안 적으면 안원잘부_영상목록.json)
+import json, os, sys, time
 from youtube_transcript_api import YouTubeTranscriptApi
 
 here = os.path.dirname(os.path.abspath(__file__))
-data = json.load(open(os.path.join(here, "안원잘부_영상목록.json"), encoding="utf-8"))
-out_dir = os.path.join(here, "자막")
+list_name = sys.argv[1] if len(sys.argv) > 1 else "안원잘부_영상목록.json"
+data = json.load(open(os.path.join(here, list_name), encoding="utf-8"))
+out_dir = os.path.join(here, "자막_" + list_name.replace("_영상목록.json", "").replace(".json", ""))
 os.makedirs(out_dir, exist_ok=True)
 api = YouTubeTranscriptApi()
 
